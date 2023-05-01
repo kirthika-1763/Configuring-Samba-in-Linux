@@ -1,0 +1,36 @@
+Samba is a free open source software suit that enables file and print sharing between computers running windows and linux like operating systems.It implements the Server Message Block[SMB]
+It is the standard protocol used by Windows for file and print sharing.
+NTLM(NT LAN Manager) is an authentication protocol used by windows based clients to authenticate with samba sever.
+Samba provides seamless integration
+The samba server then verifies the users credentials against its user database which can be a local database or external authenticaation source such as LDAP or active directory   
+Local database is typically stored in a file named "smbpasswd" located at /rtc/samba directory.
+The file contains usernames,encrypted passwords and other information related to user accounts.
+To find the ip address of the samba server  ifconfig or ip address command can be used.
+Commands used by the window user to find the file shared by the samba server.
+net use <drive letter>: \\samba-server\share/user:<username><password>
+or we can use the below command
+open run prompt by pressing win+r in keyboard and type samba server ip address.
+Need of firewall:
+It is the recommended to have a firewall enabled for local file sharing systems,even if the system is not directly connecte to the internet.
+A firewall can help prevent this from happening by blocking unauthorized access to your network and monitoring network traffic for suspicious activity
+
+Installing samba package in Red Hat Linux
+1.yum install samba
+
+Create a new linux user account for the samba server
+2.sudo adduser <username>
+
+Adding the user to the samba user database
+3.sudo smbpasswd -a <username>
+
+Opening and editing the samba server configuration file
+4.vim /etc/samba/smb.conf
+
+5.[myshare]
+path=/path/to/myshare
+valid users = sambauser
+read only = no
+
+Restarting samba service after changes to smb.conf
+6.sudo systemctl restart smb
+sudo systemctl restart firewalld
